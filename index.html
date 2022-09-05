@@ -4,11 +4,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Window Object</title>
+ <link rel="stylesheet" type="text/css" href="./assets/style.css"/>
+  <title>Quiz</title>
 </head>
 
 <body>
-  <h1 style="text-align:center;">Open the Console to See the Magic ✨! </h1>
-  <script src= "script.js"></script>
+
+<header>
+    <h1> Quiz </h1>
+    <button>Start</button>
+    <div class = "timer">
+        <H2> Timer </H2>
+            <div class = "timerDisplay"></div>
+        
+
+    </div>
+</header>
+
+<main>
+    
+    <h2 class = quizDisplay>Question Display</h2>
+
+        <button data-correct = true class = b1> </button>
+        <button data-correct = true class = b2></button>
+        <button data-correct = true class = b3></button>
+        <button data-correct = true class = b4></button>
+
+    <h2 class = results></h2>
+</main>
+
+<script src = "./assets/script.js"></script>
+
 </body>
 </html>
