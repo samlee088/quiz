@@ -11,26 +11,61 @@
 <body>
 
 <header>
-    <h1> Quiz </h1>
-    <button>Start</button>
-    <div class = "timer">
-        <H2> Timer </H2>
-            <div class = "timerDisplay"></div>
-        
-
-    </div>
+    <h1> UW Coding Bootcamp Quiz </h1>
 </header>
 
 <main>
-    
-    <h2 class = quizDisplay>Question Display</h2>
 
-        <button data-correct = true class = b1> </button>
-        <button data-correct = true class = b2></button>
-        <button data-correct = true class = b3></button>
-        <button data-correct = true class = b4></button>
+<!-- This is the introduction text before the quiz starts -->
+<div class = "introductionDisplaytext">
+     <p class = "introduction">Hello, welcome to the UW Bootcamp Coding Quiz Challenge 2022! Please start the quiz with the start button! Please note the following rule set:</p>
 
-    <h2 class = results></h2>
+    <ul class="introductionRules">
+        <li >There are a total of 3 questions, each worth 1 point each</li>
+        <li>There is a 60 second time limit</li>
+        <li>Each incorrect answer will result in 10 seconds deduction from the timer</li>
+    </ul>
+</div>
+
+    <button id="buttonStart">Start</button>
+    <div class = "timer">
+        <H2> Timer </H2>
+            <div class = "timerDisplay"></div>
+        </div>
+
+<!-- This is the HTML for the quiz buttons -->
+
+<h2 class = quizDisplay></h2>
+
+<div class="quizButtons">
+        <button class = b1> </button>
+        <br>
+        <button class = b2></button>
+        <br>
+        <button class = b3></button>
+        <br>
+        <button class = b4></button>
+        <br>
+</div>
+
+<!-- HTML that helps support during the quiz action items -->
+
+<h2 class = results> </h2>
+<h2 class = resultsText></h2>
+
+<!-- HTML that displays once the quiz ends -->
+<form class="highScore" method="POST">
+    <label for="highScoreName">Add a High Score </label>
+    <input type = "text" class="highScoreInput" placeholder="High Score Name" name="High Score Name" />
+    <button class="highScoreButton">Submit</button>
+</form> 
+
+<!-- HTML to set the ending of the quiz action items -->
+
+<ul class="highScoresList"></ul>
+<button class = "goBack"> Go Back</button>
+<button class = "scoreReset"> Reset High Scores</button>
+
 </main>
 
 <script src = "./assets/script.js"></script>

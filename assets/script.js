@@ -1,71 +1,52 @@
 
-/* creation of a start button  */
-/* timer goes off when start button starts */
-/* game ends when the timer or when the questions are done */
-/* incorrect anser to a question subtracts time from the clock */
-/* able to save my initials and my score */
 
-
-
-/* start of the code */
-/* creation of the button */
-/* able to click the button */
-/* when the webpage loads, grab the saved scores */
-/* use css display none to make introduction go away and start quiz */
-
-
-/* Quiz */
-/* Timer creation once the quiz starts with start button */
-/* timer goes down with incorrect asnwers */
-/* questions are list? or are they arrays? */
-/* question answers are a form of 'touch' */
-/* depending on touch outcome, correct answer or incorrect answer */
-/* answer will show correct or incorrect */
-/* goes through next questions */
-/* end of the quiz once the timer hits 0, or all of the questions are  */
-/* once the quiz completes, then the wins and loss counters are set to 0 again */
-/* questions are to sourced in the javascript, while the buttons are in the HTML */
-
-
-/* Post Quiz */
-/* Able to create list of dropdown of initials of scores */
-/*quiz answers results are to be stored as variables */
-/* the variables are then going to be able to be stored as local storage for the list */
-
-
-var startButton = document.querySelector("button");
+/* Variable declaration section */
+var startButton = document.querySelector("#buttonStart");
 var timerDisplay = document.querySelector(".timerDisplay");
 
+var correctCounter;
+var inCorrectCounter;
+var timeLeft;
+var identify;
+var highScores=[];
 
-var correctCounter = 0;
-var inCorrectCounter = 0;
-var timeLeft= 1000;
-var identify = 0;
 
 const answersDisplay = document.querySelector(".results");
 const questionFeed = document.querySelector(".quizDisplay");
+const highScoreDisplay = document.querySelector(".highScoreInput");
+const highScoreButtonDisplay = document.querySelector(".highScoreButton");
+const highScoreSubmit = document.querySelector(".highScore");
+const highScoreType = document.querySelector(".highScoreInput");
+const highScoresListDisplay = document.querySelector(".highScoresList");
+const introductionDisplay = document.querySelector(".introductionDisplaytext");
+
+
 const button1Display = document.querySelector(".b1");
 const button2Display = document.querySelector(".b2");
 const button3Display = document.querySelector(".b3");
 const button4Display = document.querySelector(".b4");
+const goBackButtonDisplay = document.querySelector (".goBack");
+const scoreResetButtonDisplay = document.querySelector (".scoreReset");
 
 
+
+/* These are the questions and answers to the quiz put into an array format. */
 
 let questionsSet = [
     {
         identify: 0,
-        question : "What is the difference between let, var, const?",
+        question : "Which one of the following statements about var, let and const are true?",
         answers:[
             {optionA: "There is no difference", isCorrect: false},
-            {optionB: "let can be declared locally but only used locally, must be delcared globally to be used globally. var can be delcared anywhere to be used anywhere. const is a variable that can be changed throughout the script.", isCorrect: false},
-            {optionC: "let can be declared locally but only used locally, must be delcared globally to be used globally. var can be delcared anywhere to be used anywhere. const is a variable that cannot be changed later in the script.", isCorrect: true},
-            {optionD: "let can be declared anywhere to be used globally. var can be declared locally but only used locally, must be delcared globally to be used globally.. const is a variable that cannot be changed later in the script.", isCorrect: false}
+            {optionB: "let does not have block scope and can be accessed from outside the block it was declared in. var has block scope and cannot be accessed from outside the block it was declared in. const is a variable that can be changed throughout the script.", isCorrect: false},
+            {optionC: "let does have block scope and cannot be accessed from outside the block it was declared in. var does not have block scope can be accessed from outside the block it was declared in. const does have block scope, and additionally is a variable that cannot be changed later in the script.", isCorrect: true},
+            {optionD: "let does have block scope and cannot be accessed from outside the block it was declared in. var does not have block scope can be accessed from outside the block it was declared in. const does not have block scope, and additionally is a variable that cannot be changed later in the script.", isCorrect: false}
         ]
 
     } ,
    {
         identify: 1,
-        question: "Which of the following statements regarding 'for' loops is true?",
+        question: "Which of the following statements regarding for loops is true?",
         answers:
         [
             {optionA: "Any one of the 3 condition statement can be left out and does not require additional semi-colons, for example for ()", isCorrect: false},
@@ -73,21 +54,48 @@ let questionsSet = [
             {optionC: "A maximum of 1 out of the three statements must be declared for a 'for' funcdtion to work, for example for(i=0; ;)", isCorrect: false},
             {optionD: "None of the condition statements can be filled out for a 'for' statement to work, but requires the semi-colons, for example for( ; ;)", isCorrect: true}
         ]
-   }
+   },
+
+{
+    identify: 2,
+    question: "Which one of the statements regarded querySelectorAll and getElementsByClassName is true?",
+    answers:
+    [
+        {optionA: "querySelectorAll makes it possible to select both by element name and by class name. getElementsByClassName only allows selecting by class name", isCorrect: true},
+        {optionB: "There are no differences between the 2 options ", isCorrect: false},
+        {optionC: "querySelectorAll only allows selecting by class name. getElementsByClassName makes it possible to select both by element name and by class name. ", isCorrect: false},
+        {optionD: "querySelectorAll only searches for matches in CSS type files.getElementsByClassName allows searches on HTML and CSS files only.", isCorrect: false}
+    ]
+}
 ]
 
 
-
+/* actions for the start button to initiate the game. includes resetting all of the 'base' variables to initial values, starting the timer, clearing out the introduction messages and displaying the 1st question. */
 startButton.addEventListener("click", function(event){
     startQuiz(0)
     startTimer()
-    console.log(event.target.textContent)
-   
+
+    identify = 0;
+    timeLeft = 60;
+    correctCounter = 0;
+    inCorrectCounter = 0;
+
+    timerDisplay.textContent = timeLeft;
+    document.querySelector('.quizButtons').style.display = 'block';
+    document.querySelector('.introduction').style.display = 'none';
+    document.querySelector('#buttonStart').style.display = 'none';
+    document.querySelector('.timer h2').style.display='block';
+    questionFeed.style.display = 'block';
+    var introArray = document.getElementsByClassName("introductionRules");
+    var i;
+    for (i=0; i<introArray.length; i++) {
+        introArray[i].style.display = "none";
+    }
 });
 
-
+/* This is the function that sets the action items for the  quiz itself */
 function startQuiz(identify) {
-    
+
     questionFeed.textContent = questionsSet[identify].question;
 
     button1Display.textContent = questionsSet[identify].answers[0].optionA;
@@ -99,120 +107,53 @@ function startQuiz(identify) {
     button2Display.value = questionsSet[identify].answers[1].isCorrect;
     button3Display.value = questionsSet[identify].answers[2].isCorrect;
     button4Display.value = questionsSet[identify].answers[3].isCorrect;
-
-    console.log(button1Display.value);
-    console.log(button2Display.value);
-    console.log(button3Display.value);
-    console.log(button4Display.value);
-
-
-
-    // var status = "";
-
-    button1Display.addEventListener("click", function evaluate () {
-        
-        if (questionsSet[identify].answers[0].isCorrect===true) {
-            correctAnswer();
-        }
-        else {
-            inCorrectAnswer();
-        }
-    } )
-
-    button2Display.addEventListener("click", function evaluate () {
-      
-        if (questionsSet[identify].answers[1].isCorrect===true) {
-            correctAnswer();
-        }
-        else {
-            inCorrectAnswer();
-        }
-    } )
-
-
-    button3Display.addEventListener("click", function evaluate () {
-       
-        if (questionsSet[identify].answers[2].isCorrect===true) {
-            correctAnswer();
-        }
-        else {
-            inCorrectAnswer();
-        }
-    } )
-
-    button4Display.addEventListener("click", function evaluate () {
-       
-        if (questionsSet[identify].answers[3].isCorrect===true) {
-            correctAnswer();
-        }
-        else {
-            inCorrectAnswer();
-        }
-    } )
-
-
-   
-
-    // if (status===true) {
-    //     answersDisplay.textContent = "Correct";
-    // }
-    // else {
-    //     answersDisplay.textContent = "Incorrect";
-    //     timeLeft -= 100;
-    // }
-
-    // button1Display.setAttribute("data-correct",questionsSet[identify].answers[0].isCorrect);
-    // button2Display.setAttribute("data-correct",questionsSet[identify].answers[1].isCorrect);
-    // button3Display.setAttribute("data-correct",questionsSet[identify].answers[2].isCorrect);
-    // button4Display.setAttribute("data-correct",questionsSet[identify].answers[3].isCorrect);
-
-    // function click(event) {
-    //     event.target.getattribute('data-correct');
-    //    }
- 
-
-    // button1Display.addEventListener("click", function button() {
-    //    click()
-    //     if (click())  {
-    //         answersDisplay.textContent = "Correct"
-    //     }   
-    //         else {
-    //             answersDisplay.textContent = "Incorrect"
-    //         }
-    //     })
-    // button2Display.addEventListener("click", function(event){
-    //     console.log(event.target.attribute('data-correct'));
-    //     if (event.target.getattribute('data-correct')) {
-    //         answersDisplay.textContent = "Correct"
-    //     }   
-    //         else {
-    //             answersDisplay.textContent = "Incorrect"
-    //         }
-    //     })
-    // button3Display.addEventListener("click", function(event){
-    //     console.log(event.target.attribute('data-correct'));
-    //     if (event.target.getattribute('data-correct')) {
-    //         answersDisplay.textContent = "Correct"
-    //     }   
-    //         else {
-    //             answersDisplay.textContent = "Incorrect"
-    //         }
-    //     })
-    // button4Display.addEventListener("click", function(event){
-    //     console.log(event.target.attribute('data-correct'));
-    //     if (event.target.getattribute('data-correct')) {
-    //         answersDisplay.textContent = "Correct"
-    //     }   
-    //         else {
-    //             answersDisplay.textContent = "Incorrect"
-    //         }
-
-    // })
 }
 
+button1Display.addEventListener("click", function evaluate () {
+        
+    if (questionsSet[identify].answers[0].isCorrect===true) {
+        correctAnswer();
+    }
+    else {
+        inCorrectAnswer();
+    }
+} )
 
+button2Display.addEventListener("click", function evaluate () {
+  
+    if (questionsSet[identify].answers[1].isCorrect===true) {
+        correctAnswer();
+    }
+    else {
+        inCorrectAnswer();
+    }
+} )
+
+
+button3Display.addEventListener("click", function evaluate () {
+   
+    if (questionsSet[identify].answers[2].isCorrect===true) {
+        correctAnswer();
+    }
+    else {
+        inCorrectAnswer();
+    }
+} )
+
+button4Display.addEventListener("click", function evaluate () {
+   
+    if (questionsSet[identify].answers[3].isCorrect===true) {
+        correctAnswer();
+    }
+    else {
+        inCorrectAnswer();
+    }
+} )
+
+
+/* Function that loops through the array of quiz questions and asnwers */
 function reRun() {
-    if (identify < 2) {
+    if (identify < 3) {
    
     startQuiz(identify)
     }
@@ -221,6 +162,7 @@ function reRun() {
     }
 }
 
+/* Functions that define results depending on the action items for correct of incorrect answers of the quiz */
 function correctAnswer() {
     answersDisplay.textContent = "Correct";
     correctCounter ++;
@@ -231,45 +173,122 @@ function correctAnswer() {
 
 function inCorrectAnswer() {
     answersDisplay.textContent = "Incorrect";
-    timeLeft -= 100;
+    timeLeft -= 10;
     inCorrectCounter ++;
     identify ++
     reRun()
 }
 
-
+/* Function defines that applies once the quiz ends with either the end of the questions, or the time limit expiring */
 function endGame() {
 questionFeed.textContent = "End of Game";
-button1Display.style.display = "none";
-button2Display.style.display = "none";
-button3Display.style.display = "none";
-button4Display.style.display = "none";
+document.querySelector('.quizButtons').style.display = 'none';
 clearInterval(timer);
-answersDisplay.textContent = correctCounter;
+answersDisplay.style.display = 'block';
+document.querySelector('.resultsText').style.display = 'block';
+document.querySelector('.resultsText').textContent = "The Final Score is:  " + correctCounter;
+highScoreDisplay.style.display='block';
+highScoreButtonDisplay.style.display='block';
+highScoreSubmit.style.display = 'block';
+document.querySelector('.timer h2').style.display='none';
+timerDisplay.style.display = 'none';
+
 }
 
+/* Function for when the high score submit button is taken by the user */
+highScoreSubmit.addEventListener("submit", function(event) {
+    event.preventDefault();
+    highScoresListDisplay.textContent = "";
+    var highScoreText = highScoreType.value.trim();
+
+    if(highScoreText==="") {
+        return;
+    }
+
+    highScores.push(highScoreText + " - " + correctCounter);
+    highScoreType.value='';
+
+    storeHighScores();
+
+    goBackButtonDisplay.style.display = 'block';
+    scoreResetButtonDisplay.style.display = 'block';
+    highScoresListDisplay.style.display = 'block';
+    questionFeed.style.display = 'none';
+    answersDisplay.style.display = 'none';
+    highScoreDisplay.style.display='none';
+    highScoreButtonDisplay.style.display='none';
+    highScoreSubmit.style.display = 'none';
+    document.querySelector('.resultsText').style.display = 'none'
+
+})
+
+/* Function to store the high score locally, and additionally to display the high scores on screen */
+function storeHighScores () {
+    localStorage.setItem("highScores", JSON.stringify(highScores))
+
+    for (var x=0; x < highScores.length; x++) {
+        var highScore = highScores[x];
+
+        var li = document.createElement("li");
+        li.textContent = highScore;
+        li.setAttribute("data-index",x);
+
+        highScoresListDisplay.appendChild(li);
+    }
+}
+
+/* This is the function that will run to grab the high scores that are stored locally */
+function highScoresGrab() {
+var storedHighScores = JSON.parse(localStorage.getItem("highScores"));
+if (storedHighScores !== null) {
+    highScores = storedHighScores;
+}
+}
+
+highScoresGrab()
 
 
 
-function startTimer
-() {
-   
-    timerDisplay.textContent = timeLeft;
-timer = setInterval(function(){
+/* functions to get back to the original homescreen of the quiz once the end of the quiz is reached */
+goBackButtonDisplay.addEventListener("click", function() {
+    document.querySelector('.introduction').style.display = 'block';
+
+    var introArray = document.getElementsByClassName("introductionRules");
+    var i;
+    for (i=0; i<introArray.length; i++) {
+       introArray[i].style.display = "block";
+    }
+
+    questionFeed.style.display = 'none';
+    goBackButtonDisplay.style.display = 'none';
+    scoreResetButtonDisplay.style.display = 'none';
+    highScoresListDisplay.style.display = 'none';
+    document.querySelector('#buttonStart').style.display = 'block';
+})
+
+scoreResetButtonDisplay.addEventListener("click", function() {
+    highScores=[]
+    questionFeed.style.display = 'block';
+    questionFeed.textContent = "High Scores Reset";
+    highScoresListDisplay.textContent = "";
+})
+
+/* Function to start the game timer, display game clock, and end the game once the timer reaches 0 or less. */
+function startTimer() {
+    
+    timerDisplay.style.display = 'block';
+
+    timer = setInterval(function(){
     timeLeft--;
     timerDisplay.textContent = timeLeft;
 
-;
-    if (timeLeft > 0) {
-
-
-        
-    } else if (timeLeft === 0) {
+    if (timeLeft <= 0) {
         clearInterval(timer);
+        endGame();
     }
 }
 ,1000)
-
 }
+
 
 
