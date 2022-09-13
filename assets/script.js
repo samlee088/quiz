@@ -80,6 +80,7 @@ startButton.addEventListener("click", function(event){
     correctCounter = 0;
     inCorrectCounter = 0;
 
+    answersDisplay.style.display = 'block';
     timerDisplay.textContent = timeLeft;
     document.querySelector('.quizButtons').style.display = 'block';
     document.querySelector('.introduction').style.display = 'none';
@@ -258,7 +259,7 @@ goBackButtonDisplay.addEventListener("click", function() {
     for (i=0; i<introArray.length; i++) {
        introArray[i].style.display = "block";
     }
-
+    answersDisplay.textContent = " ";
     questionFeed.style.display = 'none';
     goBackButtonDisplay.style.display = 'none';
     scoreResetButtonDisplay.style.display = 'none';
