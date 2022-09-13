@@ -163,6 +163,7 @@ header h1 {
     font-size:20px;
     background-color:var(--buttonBackground);
     color:var(--buttonColor);
+    border-radius:8px;
 }
 
 .highScoreButton:hover {
@@ -185,15 +186,23 @@ header h1 {
     color:var(--buttonColor);
 }
 
+.endingButtons {
+    display:flex;
+    flex-direction:row;
+    justify-content: center;
+}
+
 .goBack {
 display:none;
 text-align:center;
-margin:30px auto auto auto;
+margin:30px 50px auto 50px;
 height:30px;
 font-size:20px;
 background-color:var(--buttonBackground);
 color:var(--buttonColor);
+border-radius:8px;
 }
+
 .goBack:hover {
     background-color: var(--buttonAction);
 }
@@ -208,22 +217,23 @@ color:var(--buttonColor);
 .scoreReset {
     display:none;
     text-align:center;
-    margin:30px auto auto auto;
+    margin:30px 50px auto 50px;
     height:30px;
     font-size:20px;
     background-color:var(--buttonBackground);
     color:var(--buttonColor);
-    }
-    .scoreReset:hover {
-        background-color: var(--buttonAction);
-    }
-    
-    .scoreReset:active {
-        background-color: var(--buttonAction);
-        box-shadow:5px 4px #666;
-        transform: translateY(4px);
-    }
-    
+    border-radius:8px;
+}
+.scoreReset:hover {
+    background-color: var(--buttonAction);
+}
+
+.scoreReset:active {
+    background-color: var(--buttonAction);
+    box-shadow:5px 4px #666;
+    transform: translateY(4px);
+}
+
 
 .highScoresList li {
  
