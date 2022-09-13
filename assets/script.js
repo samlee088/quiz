@@ -223,6 +223,7 @@ highScoreSubmit.addEventListener("submit", function(event) {
 
 })
 
+
 /* Function to store the high score locally, and additionally to display the high scores on screen */
 function storeHighScores () {
     localStorage.setItem("highScores", JSON.stringify(highScores))

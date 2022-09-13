@@ -193,14 +193,14 @@ header h1 {
 }
 
 .goBack {
-display:none;
-text-align:center;
-margin:30px 50px auto 50px;
-height:30px;
-font-size:20px;
-background-color:var(--buttonBackground);
-color:var(--buttonColor);
-border-radius:8px;
+    display:none;
+    text-align:center;
+    margin:30px 50px auto 50px;
+    height:30px;
+    font-size:20px;
+    background-color:var(--buttonBackground);
+    color:var(--buttonColor);
+    border-radius:8px;
 }
 
 .goBack:hover {
@@ -237,10 +237,10 @@ border-radius:8px;
 
 .highScoresList li {
  
-text-align:center;
-margin:30px auto auto auto;
-height:30px;
-width:200px;
-font-size:20px;
-color:var(--buttonColor);
+    text-align:center;
+    margin:30px auto auto auto;
+    height:30px;
+    width:200px;
+    font-size:20px;
+    color:var(--buttonColor);
 }
